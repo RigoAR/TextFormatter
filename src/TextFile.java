@@ -3,6 +3,7 @@ import java.util.Random;
 public class TextFile
 {
     private ArrayList<String> fileContent;
+    private iFormat format;
 
     public TextFile()
     {
@@ -45,6 +46,11 @@ public class TextFile
             System.out.println(option + fileContent.get(i) + option);
         }
     }
+
+    public void setFormat(iFormat format) {
+        this.format = format;
+    }
+
 
 
 }
