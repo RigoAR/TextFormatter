@@ -37,10 +37,10 @@ public class TextFile
     {
         String[] options = {"**", "***", "<sub>", "~~", "_"};
         Random rng = new Random();
-        int number = rng.nextInt(options.length);
         System.out.println("#" + fileContent.get(0));
         for(int i = 0; i < fileContent.size(); i++)
         {
+            int number = rng.nextInt(options.length);
             String option = options[number];
             System.out.println(option + fileContent.get(i) + option);
         }
