@@ -15,20 +15,21 @@ public class Main {
         switch (option) {
 
             case 0:
-                file.printPlainText();
+                file.setFormat(new PlainTextFormat());
                 break;
 
             case 1:
-                file.printHTML();
+                file.setFormat(new HTMLFormat());
                 break;
 
             case 2:
-                file.printMarkDown();
+                file.setFormat(new MarkDownFormat());
                 break;
             default:
-                file.printPlainText();
+                file.setFormat(new PlainTextFormat());
 
         }
+        file.printFormatted();
 
     }
 }

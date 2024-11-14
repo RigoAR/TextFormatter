@@ -51,6 +51,11 @@ public class TextFile
         this.format = format;
     }
 
+    public void printFormatted()
+    {
+        format.format(fileContent);
+    }
+
 
 
 }
