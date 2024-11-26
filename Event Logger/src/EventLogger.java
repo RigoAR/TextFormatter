@@ -1,11 +1,16 @@
 import java.io.*;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class EventLogger {
     private static EventLogger instance;
     private LogLevel currentLogLevel;
     private static final String LOG_FILE = "application.log";
+    private static final String ARCHIVED_LOG_DIR = "archived_logs";
+    private static final long ARCHIVE_INTERVAL_MS = 60000; // 1 minute
+    private static final ReentrantLock lock = new ReentrantLock();
+    private long lastArchiveTime = System.currentTimeMillis();
 
     public enum LogLevel {
         INFO, DEBUG, ERROR
@@ -33,10 +38,14 @@ public class EventLogger {
     public synchronized void log(LogLevel level, String message) {
         if (level.ordinal() >= currentLogLevel.ordinal()) {
             String logMessage = formatLogMessage(level, message);
-
             System.out.println(logMessage);
-
             logToFile(logMessage);
+
+            long currentTime = System.currentTimeMillis();
+            if (currentTime - lastArchiveTime >= ARCHIVE_INTERVAL_MS) {
+                archiveLogs();
+                lastArchiveTime = currentTime;
+            }
         }
     }
 
@@ -62,5 +71,40 @@ public class EventLogger {
             System.out.println("Error reading log history: " + e.getMessage());
             return new String[0];
         }
+    }
+
+    public synchronized void archiveLogs() {
+        lock.lock();
+        try {
+            String timestamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            File logFile = new File(LOG_FILE);
+            if (logFile.exists()) {
+                File archiveDir = new File(ARCHIVED_LOG_DIR);
+                if (!archiveDir.exists()) {
+                    archiveDir.mkdirs();
+                }
+
+                File archivedLog = new File(ARCHIVED_LOG_DIR, "log_" + timestamp + ".txt");
+                try (BufferedReader reader = new BufferedReader(new FileReader(logFile));
+                     BufferedWriter writer = new BufferedWriter(new FileWriter(archivedLog))) {
+                    String line;
+                    while ((line = reader.readLine()) != null) {
+                        writer.write(line);
+                        writer.newLine();
+                    }
+                }
+
+                new BufferedWriter(new FileWriter(logFile)).close();
+                System.out.println("Logs archived successfully.");
+            }
+        } catch (IOException e) {
+            System.out.println("Error archiving logs: " + e.getMessage());
+        } finally {
+            lock.unlock();
+        }
+    }
+
+    public synchronized void archiveLogsOnDemand() {
+        archiveLogs();
     }
 }
