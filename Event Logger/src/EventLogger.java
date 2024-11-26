@@ -12,12 +12,16 @@ public class EventLogger {
     }
 
     private EventLogger() {
-        currentLogLevel = LogLevel.INFO;  // Default log level
+        currentLogLevel = LogLevel.INFO;
     }
 
     public static EventLogger getInstance() {
         if (instance == null) {
-            instance = new EventLogger();
+            synchronized (EventLogger.class) {
+                if (instance == null) {
+                    instance = new EventLogger();
+                }
+            }
         }
         return instance;
     }
@@ -26,7 +30,7 @@ public class EventLogger {
         this.currentLogLevel = level;
     }
 
-    public void log(LogLevel level, String message) {
+    public synchronized void log(LogLevel level, String message) {
         if (level.ordinal() >= currentLogLevel.ordinal()) {
             String logMessage = formatLogMessage(level, message);
 
@@ -42,7 +46,7 @@ public class EventLogger {
         return String.format("[%s] %s: %s", timestamp, level, message);
     }
 
-    private void logToFile(String logMessage) {
+    private synchronized void logToFile(String logMessage) {
         try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE, true))) {
             writer.write(logMessage);
             writer.newLine();
@@ -51,9 +55,8 @@ public class EventLogger {
         }
     }
 
-    public String[] getLogHistory() {
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(LOG_FILE));
+    public synchronized String[] getLogHistory() {
+        try (BufferedReader reader = new BufferedReader(new FileReader(LOG_FILE))) {
             return reader.lines().toArray(String[]::new);
         } catch (IOException e) {
             System.out.println("Error reading log history: " + e.getMessage());
