@@ -6,8 +6,18 @@ public class Main {
 
         UserPreferences user = new UserPreferences("user123abc", Arrays.asList(
                 UserPreferences.NotificationPreference.SMS,
-                UserPreferences.NotificationPreference.WHATSAPP
+                UserPreferences.NotificationPreference.EMAIL
         ));
+
+        user.displayPreferences();
+
+        user.enableNotificationChannel(UserPreferences.NotificationPreference.PUSH_NOTIFICATION);
+        System.out.println("\nAfter enabling Push Notification:");
+        user.displayPreferences();
+
+        user.disableNotificationChannel(UserPreferences.NotificationPreference.EMAIL);
+        System.out.println("\nAfter disabling Email Notification:");
+        user.displayPreferences();
 
         String phoneNumber = "123-456-7890";
         String email = "rigo@example.com";
