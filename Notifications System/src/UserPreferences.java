@@ -20,7 +20,9 @@ public class UserPreferences {
     public enum NotificationPreference {
         SMS,
         EMAIL,
-        SLACK
+        SLACK,
+        WHATSAPP,
+        PUSH_NOTIFICATION
     }
 
 }
