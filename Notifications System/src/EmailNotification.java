@@ -1,12 +1,15 @@
 public class EmailNotification implements Notification {
-    private String emailAddress;
+    private String email;
+    private NotificationHistory history;
 
-    public EmailNotification(String emailAddress) {
-        this.emailAddress = emailAddress;
+    public EmailNotification(String email, NotificationHistory history) {
+        this.email = email;
+        this.history = history;
     }
 
     @Override
     public void sendNotification(String message) {
-        System.out.println("Sending Email to " + emailAddress + ": " + message);
+        System.out.println("Sending Email to " + email + ": " + message);
+        history.addNotification("Email", message);
     }
 }

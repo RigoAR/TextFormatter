@@ -2,6 +2,8 @@ import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
+        NotificationHistory history = new NotificationHistory();
+
         UserPreferences user = new UserPreferences("user123abc", Arrays.asList(
                 UserPreferences.NotificationPreference.SMS,
                 UserPreferences.NotificationPreference.WHATSAPP
@@ -12,15 +14,17 @@ public class Main {
         String slackChannel = "team-updates";
         String userDevice = "device123abc";
 
-        Notification sms = new SMSNotification(phoneNumber);
-        Notification emailNotification = new EmailNotification(email);
-        Notification slackNotification = new SlackNotification(slackChannel);
-        Notification whatsappNotification = new WhatsAppNotification(phoneNumber);
-        Notification pushNotification = new PushNotification(userDevice);
+        Notification sms = new SMSNotification(phoneNumber, history);
+        Notification emailNotification = new EmailNotification(email, history);
+        Notification slackNotification = new SlackNotification(slackChannel, history);
+        Notification whatsappNotification = new WhatsAppNotification(phoneNumber, history);
+        Notification pushNotification = new PushNotification(userDevice, history);
 
         sendNotifications(user, sms, emailNotification, slackNotification,
                 whatsappNotification, pushNotification,
                 "System Update: Maintenance scheduled at 10 PM.");
+
+        history.displayHistory();
     }
 
     private static void sendNotifications(UserPreferences user,
