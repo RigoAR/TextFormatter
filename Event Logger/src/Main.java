@@ -1,10 +1,8 @@
 public class Main {
     public static void main(String[] args) {
         EventLogger logger = EventLogger.getInstance();
-        logger.setLogLevel(EventLogger.LogLevel.DEBUG);
 
-        // Set the logging destination dynamically
-        logger.setLogDestination(EventLogger.LogDestination.FILE); // You can change this to CONSOLE or REMOTE
+        logger.setLogLevel(EventLogger.LogLevel.DEBUG);
 
         Thread thread1 = new Thread(new Runnable() {
             @Override
@@ -24,6 +22,7 @@ public class Main {
             }
         });
 
+        // Start the threads
         thread1.start();
         thread2.start();
 
