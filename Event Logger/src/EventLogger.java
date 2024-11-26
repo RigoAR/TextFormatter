@@ -1,66 +1,72 @@
-import java.io.*;
-import java.util.concurrent.locks.ReentrantLock;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
+enum LogLevel {
+    INFO, DEBUG, ERROR
+}
 
 public class EventLogger {
     private static EventLogger instance;
-
-    private static final ReentrantLock lock = new ReentrantLock();
-
-    private File logFile;
-
+    private List<String> logHistory;
+    private LogLevel currentLogLevel;
 
     private EventLogger() {
-        this.logFile = new File("application.log");
+        logHistory = new ArrayList<>();
+        currentLogLevel = LogLevel.INFO;
     }
 
     public static EventLogger getInstance() {
         if (instance == null) {
-            lock.lock();
-            try {
-                if (instance == null) {
-                    instance = new EventLogger();
-                }
-            } finally {
-                lock.unlock();
-            }
+            instance = new EventLogger();
         }
         return instance;
     }
 
+    public void setLogLevel(LogLevel logLevel) {
+        this.currentLogLevel = logLevel;
+    }
 
-    public synchronized void log(String message) {
-        try {
-            try (FileWriter writer = new FileWriter(logFile, true);
-                 BufferedWriter bufferedWriter = new BufferedWriter(writer)) {
-                bufferedWriter.write(message);
-                bufferedWriter.newLine();
-            }
+    public void logInfo(String message) {
+        log(LogLevel.INFO, message);
+    }
 
-            System.out.println(message);
-        } catch (IOException e) {
-            e.printStackTrace();
+    public void logDebug(String message) {
+        log(LogLevel.DEBUG, message);
+    }
+
+    public void logError(String message) {
+        log(LogLevel.ERROR, message);
+    }
+
+    private void log(LogLevel logLevel, String message) {
+        if (logLevel.ordinal() >= currentLogLevel.ordinal()) {
+            String logMessage = String.format("[%s] %s: %s", logLevel, java.time.LocalDateTime.now(), message);
+            System.out.println(logMessage);
+            logHistory.add(logMessage);
         }
     }
 
-    public synchronized String getLogHistory() {
-        StringBuilder logHistory = new StringBuilder();
-        try (BufferedReader reader = new BufferedReader(new FileReader(logFile))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                logHistory.append(line).append("\n");
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return logHistory.toString();
+    public List<String> getLogHistory() {
+        return logHistory;
     }
 
-
-    public synchronized void flushLogs() {
-        try (FileWriter writer = new FileWriter(logFile)) {
+    public void saveToFile(String filename) {
+        try (FileWriter writer = new FileWriter(filename)) {
+            for (String log : logHistory) {
+                writer.write(log + System.lineSeparator());
+            }
+            System.out.println("Logs saved to file: " + filename);
         } catch (IOException e) {
-            e.printStackTrace();
+            System.out.println("Error saving log file: " + e.getMessage());
         }
+    }
+
+    public void flushLogs() {
+        logHistory.clear();
+        System.out.println("Logs flushed.");
     }
 }
+
 
