@@ -1,0 +1,13 @@
+[2024-11-25 19:42:46] INFO: Application started.
+[2024-11-25 19:42:46] DEBUG: Debugging application.
+[2024-11-25 19:42:46] ERROR: An error occurred.
+[2024-11-25 19:42:46] INFO: Processing user input.
+[2024-11-25 19:42:46] ERROR: Error while processing request.
+[2024-11-25 19:46:53] DEBUG: Debug log from thread 1
+[2024-11-25 19:46:53] ERROR: Error log from thread 1
+[2024-11-25 19:46:53] DEBUG: Debug log from thread 2
+[2024-11-25 19:46:53] ERROR: Error log from thread 2
+[2024-11-25 20:23:00] DEBUG: Debug log from thread 1
+[2024-11-25 20:23:00] ERROR: Error log from thread 1
+[2024-11-25 20:23:00] DEBUG: Debug log from thread 2
+[2024-11-25 20:23:00] ERROR: Error log from thread 2

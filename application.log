@@ -1,0 +1,40 @@
+[2024-11-25 20:50:40] [DEBUG] Debug log from thread 1
+[2024-11-25 20:50:40] [ERROR] Error log from thread 1
+[2024-11-25 20:50:40] [DEBUG] Debug log from thread 2
+[2024-11-25 20:50:40] [ERROR] Error log from thread 2
+[2024-11-25 20:56:43] DEBUG: Connecting to database...
+[2024-11-25 20:56:43] ERROR: Database connection failed
+[2024-11-25 20:56:43] DEBUG: Debug log from thread 1
+[2024-11-25 20:56:43] DEBUG: Debug log from thread 2
+[2024-11-25 20:56:43] ERROR: Error log from thread 1
+[2024-11-25 20:56:43] ERROR: Error log from thread 2
+[2024-11-25 21:05:14] DEBUG: Connecting to database...
+[2024-11-25 21:05:14] ERROR: Database connection failed
+[2024-11-25 21:05:14] DEBUG: Debug log from thread 2
+[2024-11-25 21:05:14] DEBUG: Debug log from thread 1
+[2024-11-25 21:05:14] ERROR: Error log from thread 2
+[2024-11-25 21:05:14] ERROR: Error log from thread 1
+[2024-11-25 21:05:33] DEBUG: Connecting to database...
+[2024-11-25 21:05:33] ERROR: Database connection failed
+[2024-11-25 21:05:33] DEBUG: Debug log from thread 1
+[2024-11-25 21:05:33] DEBUG: Debug log from thread 2
+[2024-11-25 21:05:33] ERROR: Error log from thread 2
+[2024-11-25 21:05:33] ERROR: Error log from thread 1
+[2024-11-25 21:07:23] DEBUG: Connecting to database...
+[2024-11-25 21:07:23] ERROR: Database connection failed
+[2024-11-25 21:07:23] DEBUG: Debug log from thread 1
+[2024-11-25 21:07:23] DEBUG: Debug log from thread 2
+[2024-11-25 21:07:23] ERROR: Error log from thread 1
+[2024-11-25 21:07:23] ERROR: Error log from thread 2
+[2024-11-25 21:07:40] DEBUG: Connecting to database...
+[2024-11-25 21:07:40] ERROR: Database connection failed
+[2024-11-25 21:07:40] DEBUG: Debug log from thread 1
+[2024-11-25 21:07:40] DEBUG: Debug log from thread 2
+[2024-11-25 21:07:40] ERROR: Error log from thread 1
+[2024-11-25 21:07:40] ERROR: Error log from thread 2
+[2024-11-25 21:08:49] DEBUG: Connecting to database...
+[2024-11-25 21:08:49] ERROR: Database connection failed
+[2024-11-25 21:08:49] DEBUG: Debug log from thread 1
+[2024-11-25 21:08:49] DEBUG: Debug log from thread 2
+[2024-11-25 21:08:49] ERROR: Error log from thread 2
+[2024-11-25 21:08:49] ERROR: Error log from thread 1
