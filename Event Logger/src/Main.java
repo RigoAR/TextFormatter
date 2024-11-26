@@ -3,6 +3,8 @@ public class Main {
         EventLogger logger = EventLogger.getInstance();
         logger.setLogLevel(EventLogger.LogLevel.DEBUG);
 
+        logger.setLogOutputStrategy(new EventLogger.ConsoleLogOutput());
+
         logger.log(EventLogger.LogLevel.INFO, "Application started");
         logger.log(EventLogger.LogLevel.DEBUG, "Connecting to database...");
         logger.log(EventLogger.LogLevel.ERROR, "Database connection failed");
