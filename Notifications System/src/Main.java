@@ -5,5 +5,13 @@ public class Main {
         SMSNotification sms1 = new SMSNotification("123-456-7890");
 
         sms1.sendNotification("System Update: Maintenance scheduled at 10 PM.");
+
+
+        String userEmail = "user@example.com";
+
+        Notification email = new EmailNotification(userEmail);
+
+        email.sendNotification("System Update: Maintenance scheduled at 10 PM.");
     }
+
 }
