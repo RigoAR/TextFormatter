@@ -1,23 +1,21 @@
-import java.util.ArrayList;
-import java.util.List;
+import java.io.*;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class EventLogger {
     private static EventLogger instance;
-    private List<String> logHistory;
     private LogLevel currentLogLevel;
+    private static final String LOG_FILE = "application.log";
 
     public enum LogLevel {
-        INFO,
-        DEBUG,
-        ERROR
+        INFO, DEBUG, ERROR
     }
 
     private EventLogger() {
-        logHistory = new ArrayList<>();
-        currentLogLevel = LogLevel.INFO;
+        currentLogLevel = LogLevel.INFO;  // Default log level
     }
 
-    public static synchronized EventLogger getInstance() {
+    public static EventLogger getInstance() {
         if (instance == null) {
             instance = new EventLogger();
         }
@@ -29,27 +27,37 @@ public class EventLogger {
     }
 
     public void log(LogLevel level, String message) {
-        if (shouldLog(level)) {
-            String logMessage = String.format("[%s] - %s: %s", level, java.time.LocalDateTime.now(), message);
-            logHistory.add(logMessage);
+        if (level.ordinal() >= currentLogLevel.ordinal()) {
+            String logMessage = formatLogMessage(level, message);
+
             System.out.println(logMessage);
+
+            logToFile(logMessage);
         }
     }
 
-    private boolean shouldLog(LogLevel level) {
-        return level.ordinal() >= currentLogLevel.ordinal();
+    private String formatLogMessage(LogLevel level, String message) {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        String timestamp = sdf.format(new Date());
+        return String.format("[%s] %s: %s", timestamp, level, message);
     }
 
-    public List<String> getLogHistory() {
-        return new ArrayList<>(logHistory);
+    private void logToFile(String logMessage) {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(LOG_FILE, true))) {
+            writer.write(logMessage);
+            writer.newLine();
+        } catch (IOException e) {
+            System.out.println("Error writing to log file: " + e.getMessage());
+        }
     }
 
-    public List<String> getRecentLogs(int count) {
-        int start = Math.max(logHistory.size() - count, 0);
-        return new ArrayList<>(logHistory.subList(start, logHistory.size()));
-    }
-
-    public void clearLogs() {
-        logHistory.clear();
+    public String[] getLogHistory() {
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(LOG_FILE));
+            return reader.lines().toArray(String[]::new);
+        } catch (IOException e) {
+            System.out.println("Error reading log history: " + e.getMessage());
+            return new String[0];
+        }
     }
 }
