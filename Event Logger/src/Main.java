@@ -1,22 +1,20 @@
 public class Main {
     public static void main(String[] args) {
-
         EventLogger logger = EventLogger.getInstance();
+        logger.setLogLevel(EventLogger.LogLevel.DEBUG);
 
+        logger.log(EventLogger.LogLevel.INFO, "Application started");
+        logger.log(EventLogger.LogLevel.DEBUG, "Debugging process...");
+        logger.log(EventLogger.LogLevel.ERROR, "An error occurred");
 
-        logger.setLogLevel(LogLevel.DEBUG);
-
-        logger.logInfo("Application started.");
-        logger.logDebug("Debugging the application.");
-        logger.logError("An error occurred during processing.");
-
-        System.out.println("Log history: ");
+        System.out.println("\nFull log history:");
         for (String log : logger.getLogHistory()) {
             System.out.println(log);
         }
 
-        logger.saveToFile("application_logs.txt");
-
-        logger.flushLogs();
+        System.out.println("\nRecent logs:");
+        for (String log : logger.getRecentLogs(2)) {
+            System.out.println(log);
+        }
     }
 }
