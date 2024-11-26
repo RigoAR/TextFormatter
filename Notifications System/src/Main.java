@@ -12,6 +12,11 @@ public class Main {
         Notification email = new EmailNotification(userEmail);
 
         email.sendNotification("System Update: Maintenance scheduled at 10 PM.");
+
+        String slackChannel = "#team-updates"; // Example Slack channel
+        Notification slack = new SlackNotification(slackChannel);
+
+        slack.sendNotification("System Update: Maintenance scheduled at 10 PM.");
     }
 
 }
