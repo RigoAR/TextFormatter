@@ -4,8 +4,7 @@ public class Main {
     public static void main(String[] args) {
         UserPreferences user = new UserPreferences("user123abc", Arrays.asList(
                 UserPreferences.NotificationPreference.SMS,
-                UserPreferences.NotificationPreference.WHATSAPP,
-                UserPreferences.NotificationPreference.PUSH_NOTIFICATION
+                UserPreferences.NotificationPreference.WHATSAPP
         ));
 
         String phoneNumber = "123-456-7890";
