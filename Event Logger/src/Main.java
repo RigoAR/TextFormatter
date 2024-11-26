@@ -1,8 +1,11 @@
 public class Main {
     public static void main(String[] args) {
         EventLogger logger = EventLogger.getInstance();
-
         logger.setLogLevel(EventLogger.LogLevel.DEBUG);
+
+        logger.log(EventLogger.LogLevel.INFO, "Application started");
+        logger.log(EventLogger.LogLevel.DEBUG, "Connecting to database...");
+        logger.log(EventLogger.LogLevel.ERROR, "Database connection failed");
 
         Thread thread1 = new Thread(new Runnable() {
             @Override
@@ -22,7 +25,6 @@ public class Main {
             }
         });
 
-        // Start the threads
         thread1.start();
         thread2.start();
 
